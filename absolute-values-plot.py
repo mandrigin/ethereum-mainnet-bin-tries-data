@@ -53,35 +53,36 @@ with open(filename_hex, 'r') as csv_file:
         if line_count % 100000 == 0:
             print "processed hex", line_count, "rows"
 
-with open(filename_bin, 'r') as csv_file:
-    csv_reader = csv.DictReader(csv_file)
-    line_count = 0
-    for row in csv_reader:
-        line_count += 1
+if False:
+    with open(filename_bin, 'r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        line_count = 0
+        for row in csv_reader:
+            line_count += 1
 
-        if int(row['BlockNumber']) < fromblock:
-            continue
+            if int(row['BlockNumber']) < fromblock:
+                continue
 
-        for k, v in row.iteritems():
-            k = k + "_bin"
+            for k, v in row.iteritems():
+                k = k + "_bin"
 
-            if not k in series:
-                series[k] = []
+                if not k in series:
+                    series[k] = []
 
-            if adjust_keys:
-                if k == 'LeafKeysSize_bin':
-                    v = int(v) / 8
-                if k == 'BlockWitnessSize_bin':
-                    leafKeySizeOriginal = int(row['LeafKeysSize'])
-                    leafKeySizeAdjusted = int(leafKeySizeOriginal / 8)
-                    v = int(v) - leafKeySizeOriginal + leafKeySizeAdjusted
+                if adjust_keys:
+                    if k == 'LeafKeysSize_bin':
+                        v = int(v) / 8
+                    if k == 'BlockWitnessSize_bin':
+                        leafKeySizeOriginal = int(row['LeafKeysSize'])
+                        leafKeySizeAdjusted = int(leafKeySizeOriginal / 8)
+                        v = int(v) - leafKeySizeOriginal + leafKeySizeAdjusted
 
-            series[k].append(int(v))
-        if int(row['BlockNumber']) > toblock:
-            break
+                series[k].append(int(v))
+            if int(row['BlockNumber']) > toblock:
+                break
 
-        if line_count % 100000 == 0:
-            print "processed bin", line_count, "rows"
+            if line_count % 100000 == 0:
+                print "processed bin", line_count, "rows"
 
 
 df = pd.DataFrame(series)
@@ -103,7 +104,7 @@ plt.plot(
     running_mean(df['BlockWitnessSize_bin']/1024.0/1024.0, running_mean_size),
     label = "bin witness")
 
-plt.legend()
+#plt.legend()
 
 
 plt.show()

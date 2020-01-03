@@ -88,4 +88,5 @@ plt.ylim(ymax=4)
 plt.grid(True)
 s=[1 for n in range(len(df['BlockWitnessSize_hex']))]
 plt.scatter(df['BlockWitnessSize_hex']/1024/1024.0, df['BlockWitnessSize_bin']/1024/1024.0, s=s)
+plt.gca().set_aspect('equal', adjustable='box')
 plt.show()
