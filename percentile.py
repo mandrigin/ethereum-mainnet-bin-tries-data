@@ -102,6 +102,6 @@ print "percentile 100th", df['BlockWitnessSize_bin'].quantile(1.0)
 
 plt.xlabel("MB")
 
-plt.boxplot((df['BlockWitnessSize_hex']/1024.0/1024.0,df['BlockWitnessSize_bin']/1024.0/1024.0), vert=False, labels=["hex", "bin"], showfliers=False)
+plt.boxplot((df['BlockWitnessSize_hex']/1024.0/1024.0,df['BlockWitnessSize_bin']/1024.0/1024.0), vert=False, labels=["hex", "bin"], showfliers=False, whis=[1,99])
 
 plt.show()
